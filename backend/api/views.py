@@ -3,6 +3,8 @@ import json
 
 
 def api_home(request, *args, **kwargs):
+    print(request.GET) #get the url query params
+    print(request.POST) #get the url post params
     body = request.body #byte string of JSON data
     data = {}
     try:
@@ -10,6 +12,8 @@ def api_home(request, *args, **kwargs):
     except:
         pass
     print(data)
-    # data['headers'] = request.headers
+    # data['headers'] = request.headers #passing headers without converting them to dict will cause serialization error
+    data['params'] = dict(request.GET)
+    data['headers'] = dict(request.headers) #convert headers to dict
     data['content_type'] = request.content_type
     return JsonResponse(data)
