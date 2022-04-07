@@ -8,6 +8,7 @@ get_response = requests.get(endpoint,params={"product_id": 123}) #emulate an HTT
 print(get_response.json()) 
 # print(get_response.status_code)
 # print(get_response.text) #print raw text response
+# print(get_response.headers)
 
 
 # HTTP Request -> HTML
