@@ -15,6 +15,10 @@ class ProductSerializer(serializers.ModelSerializer):
         ]
         
     def get_my_discount(self, obj):
-        print(obj.id)
-        # if I had obj.user -> I can grab user.username
+        if not hasattr(obj, 'id'):
+            return None
+        if not isinstance(obj, Product):
+            return None
         return obj.get_discount()
+        
+        
