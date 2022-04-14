@@ -3,7 +3,7 @@ import requests
 endpoint = "http://localhost:8000/api/products/"    #"http://127.0.0.1:8000/"
 
 data={
-    "title": "Made a Title with API",
+    "title": "Iphone 13 Pro",
     "price": 32.99
 }
 

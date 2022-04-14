@@ -7,6 +7,8 @@ from django.shortcuts import get_object_or_404
 from .models import Product
 from .serializers import ProductSerializer
 
+# CLASS BASED VIEWS
+
 # product create API view 
 class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
@@ -46,7 +48,10 @@ class ProductListAPIView(generics.ListAPIView):
 product_list_view = ProductListAPIView.as_view()
 
 
+# FUNCTION BASED VIEWS
+
 # Function based views for create, retrieve or list.. (all of the operations in one function)
+
 @api_view(['GET', 'POST'])
 def product_alt_view(request,pk=None, *args, **kwargs):
     method = request.method
@@ -67,10 +72,14 @@ def product_alt_view(request,pk=None, *args, **kwargs):
     if method == "POST":
         # create item
         serializer = ProductSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):  #checks if the data sent to this view endpoint via API matches how the serializer data is formatted in serializers.py
-            # instance = serializer.save()
-            #instance = form.save()
-            print(serializer.data)
+        if serializer.is_valid(raise_exception=True):  #checks if the data sent to this view endpoint via API matches how the serializer data is formatted in serializers
+            title = serializer.validated_data.get('title')
+            content = serializer.validated_data.get('content') or None
+            if content is None:
+                content = title
+
+
+            serializer.save(content=content)
             return Response(serializer.data)
         return Response({"Invalid": "not good data"}, 
         status=400)
