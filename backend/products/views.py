@@ -48,15 +48,18 @@ product_list_view = ProductListAPIView.as_view()
 
 # Function based views for create, retrieve or list.. (all of the operations in one function)
 @api_view(['GET', 'POST'])
-def product_alt_view(request, *args, **kwargs):
+def product_alt_view(request,pk=None, *args, **kwargs):
     method = request.method
     
     # check for the type of request method to specify actions
     if method == "GET":
-        pass
-        # url_args??
-        #get request as in detail view
-        #list view
+        if pk is not None:
+            # detail view
+            return Response()
+        
+        queryset = Product.objects.all()
+        data = ProductSerializer(queryset, many=True).data
+        return Response(data)
     
     if method == "POST":
         # create item
