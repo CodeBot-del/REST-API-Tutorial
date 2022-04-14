@@ -18,3 +18,5 @@ def api_home(request, *args, **kwargs):
         #instance = form.save()
         print(serializer.data)
         return Response(serializer.data)
+    return Response({"Invalid": "not good data"}, 
+    status=400)

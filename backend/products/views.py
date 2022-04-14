@@ -1,4 +1,8 @@
 from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+# from django.http import Http404
+from django.shortcuts import get_object_or_404
 
 from .models import Product
 from .serializers import ProductSerializer
@@ -41,3 +45,26 @@ class ProductListAPIView(generics.ListAPIView):
     serializer_class = ProductSerializer
 product_list_view = ProductListAPIView.as_view()
 
+
+# Function based views for create, retrieve or list.. (all of the operations in one function)
+@api_view(['GET', 'POST'])
+def product_alt_view(request, *args, **kwargs):
+    method = request.method
+    
+    # check for the type of request method to specify actions
+    if method == "GET":
+        pass
+        # url_args??
+        #get request as in detail view
+        #list view
+    
+    if method == "POST":
+        # create item
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):  #checks if the data sent to this view endpoint via API matches how the serializer data is formatted in serializers.py
+            # instance = serializer.save()
+            #instance = form.save()
+            print(serializer.data)
+            return Response(serializer.data)
+        return Response({"Invalid": "not good data"}, 
+        status=400)
