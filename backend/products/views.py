@@ -37,15 +37,6 @@ class ProductDetailAPIView(generics.RetrieveAPIView):
 product_detail_view = ProductDetailAPIView.as_view()
 
 
-# product list API View 
-class ProductListAPIView(generics.ListAPIView):
-    
-    """
-    Not gonna use this method
-    """
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-product_list_view = ProductListAPIView.as_view()
 
 
 # FUNCTION BASED VIEWS
